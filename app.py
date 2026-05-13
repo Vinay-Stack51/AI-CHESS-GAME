@@ -198,10 +198,29 @@ def move():
             if not board.is_game_over():
                 ai_move()
 
-            return jsonify({
-                "status": "ok",
-                "fen": board.fen()
-            })
+            result = None
+
+if board.is_checkmate():
+
+    if board.turn:
+        result = "🎉 White Wins by Checkmate!"
+    else:
+        result = "🤖 AI Wins by Checkmate!"
+
+elif board.is_stalemate():
+
+    result = "🤝 Draw by Stalemate!"
+
+elif board.is_insufficient_material():
+
+    result = "🤝 Draw by Insufficient Material!"
+
+
+return jsonify({
+    "status": "ok",
+    "fen": board.fen(),
+    "result": result
+})
 
     except:
         pass

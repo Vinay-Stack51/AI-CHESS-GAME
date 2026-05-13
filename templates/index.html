@@ -183,9 +183,19 @@ body::before {
 
                 if (data.status === "ok") {
 
-                    board.position(data.fen);
+    board.position(data.fen);
 
-                } else {
+    // Check game result
+    if (data.result) {
+
+        setTimeout(() => {
+
+            alert(data.result);
+
+        }, 200);
+    }
+
+} else {
 
                     alert("Illegal Move");
                 }

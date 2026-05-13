@@ -209,9 +209,9 @@ def move():
             if board.is_checkmate():
 
                 if board.turn:
-                    result = "🎉 White Wins by Checkmate!"
-                else:
                     result = "🤖 AI Wins by Checkmate!"
+                else:
+                    result = "🎉 White Wins by Checkmate!"
 
             elif board.is_stalemate():
 

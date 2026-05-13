@@ -76,10 +76,11 @@ def intermediate_ai():
             best_score = score
             best_move = move
 
-    board.push(best_move)
+    if best_move:
+        board.push(best_move)
 
 
-# Hard AI using minimax depth 2
+# Hard AI using minimax
 def minimax(board, depth, maximizing):
 
     if depth == 0 or board.is_game_over():
@@ -120,6 +121,7 @@ def minimax(board, depth, maximizing):
         return min_eval
 
 
+# Hard AI
 def hard_ai():
 
     best_move = None
@@ -139,7 +141,8 @@ def hard_ai():
             best_score = score
             best_move = move
 
-    board.push(best_move)
+    if best_move:
+        board.push(best_move)
 
 
 # AI controller
@@ -159,6 +162,7 @@ def ai_move():
 
 @app.route("/")
 def home():
+
     return render_template(
         "index.html",
         fen=board.fen(),
@@ -195,32 +199,33 @@ def move():
 
             board.push(chess_move)
 
+            # AI move
             if not board.is_game_over():
                 ai_move()
 
             result = None
 
-if board.is_checkmate():
+            # Game result
+            if board.is_checkmate():
 
-    if board.turn:
-        result = "🎉 White Wins by Checkmate!"
-    else:
-        result = "🤖 AI Wins by Checkmate!"
+                if board.turn:
+                    result = "🎉 White Wins by Checkmate!"
+                else:
+                    result = "🤖 AI Wins by Checkmate!"
 
-elif board.is_stalemate():
+            elif board.is_stalemate():
 
-    result = "🤝 Draw by Stalemate!"
+                result = "🤝 Draw by Stalemate!"
 
-elif board.is_insufficient_material():
+            elif board.is_insufficient_material():
 
-    result = "🤝 Draw by Insufficient Material!"
+                result = "🤝 Draw by Insufficient Material!"
 
-
-return jsonify({
-    "status": "ok",
-    "fen": board.fen(),
-    "result": result
-})
+            return jsonify({
+                "status": "ok",
+                "fen": board.fen(),
+                "result": result
+            })
 
     except:
         pass
